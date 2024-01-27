@@ -1,10 +1,17 @@
 import React, { useState } from "react";
-import { Spinner } from "react-bootstrap";
+import { Modal, Spinner } from "react-bootstrap";
 const ContactList = ({ isLoading, data }) => {
   const [onlyEvenChecked, setOnlyEvenChecked] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
+  const [details, setDetails] = useState(null);
 
   const handleCheckboxChange = () => {
     setOnlyEvenChecked(!onlyEvenChecked);
+  };
+
+  const handleCountryDetails = (details) => {
+    setShowDetails(true);
+    setDetails(details);
   };
 
   return (
@@ -27,14 +34,16 @@ const ContactList = ({ isLoading, data }) => {
               </tr>
             </thead>
             <tbody>
-              {data?.map((dt, i) => (
-                <tr key={i}>
-                  <td className="text-capitalize">#{dt.id}</td>
-                  <td className="text-capitalize">{dt.phone}</td>
-                  <td className="text-capitalize">{dt.country.id}</td>
-                  <td className="text-capitalize">{dt.country.name}</td>
-                </tr>
-              ))}
+              {data
+                .filter((dt) => (onlyEvenChecked ? dt.id % 2 === 0 : true))
+                .map((dt) => (
+                  <tr key={dt.id} onClick={() => handleCountryDetails(dt)}>
+                    <td className="text-capitalize">#{dt.id}</td>
+                    <td className="text-capitalize">{dt.phone}</td>
+                    <td className="text-capitalize">{dt.country.id}</td>
+                    <td className="text-capitalize">{dt.country.name}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
           {data?.map((dt, i) => {})}
@@ -53,6 +62,31 @@ const ContactList = ({ isLoading, data }) => {
           Only even
         </label>
       </div>
+
+      {/* Modal */}
+      <Modal
+        backdrop="static"
+        show={showDetails}
+        centered
+        onHide={() => setShowDetails(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Country Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div style={{ textAlign: "left", padding: "16px" }}>
+            <h4 style={{ fontSize: "18px", marginBottom: "10px" }}>
+              Country: {details?.country?.name}
+            </h4>
+            <p style={{ fontSize: "16px", marginBottom: "8px" }}>
+              Phone: {details?.phone}
+            </p>
+            <p style={{ fontSize: "16px", marginBottom: "8px" }}>
+              #Id: {details?.id}
+            </p>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };

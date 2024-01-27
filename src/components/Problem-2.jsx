@@ -16,8 +16,8 @@ const Problem2 = () => {
         setIsLoading(true);
         const response = await fetch(
           getAllContact
-            ? "https://contact.mediusware.com/api/contacts/?page=1&page_size=1"
-            : "https://contact.mediusware.com/api/country-contacts/United%20States/?page=1&page_size=5"
+            ? "https://contact.mediusware.com/api/contacts/?page=1&page_size=10"
+            : "https://contact.mediusware.com/api/country-contacts/United%20States/?page=1&page_size=10"
         );
 
         if (!response.ok) {
