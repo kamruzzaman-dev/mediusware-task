@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Spinner } from "react-bootstrap";
+import { useInView } from "react-intersection-observer";
+
 const ContactList = ({ isLoading, data, setPage }) => {
   const [onlyEvenChecked, setOnlyEvenChecked] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
@@ -14,16 +16,21 @@ const ContactList = ({ isLoading, data, setPage }) => {
     setDetails(details);
   };
 
+  const [ref, inView] = useInView({
+    triggerOnce: false, // Fire the event only once
+    threshold: 0.5, // Adjust this threshold as needed
+  });
+
+  useEffect(() => {
+    if (inView) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  }, [inView]);
+
   return (
     <div>
-      {isLoading ? (
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </div>
-      ) : (
-        <div>
+      <div style={{ maxHeight: "60vh", overflowY: "scroll" }}>
+        {data.length > 0 && (
           <table className="table table-striped ">
             <thead>
               <tr>
@@ -46,9 +53,26 @@ const ContactList = ({ isLoading, data, setPage }) => {
                 ))}
             </tbody>
           </table>
-          {data?.map((dt, i) => {})}
-        </div>
-      )}
+        )}
+        {isLoading && (
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
+        )}
+        {data.length > 0 && (
+          <div
+            ref={ref}
+            className="w-100"
+            style={{
+              height: "100px",
+              width: "100%",
+              backgroundColor: "Transparent",
+            }}
+          ></div>
+        )}
+      </div>
       {/* Checkbox */}
       <div className="form-check mt-3">
         <input
@@ -62,7 +86,6 @@ const ContactList = ({ isLoading, data, setPage }) => {
           Only even
         </label>
       </div>
-
       {/* Modal */}
       <Modal
         backdrop="static"

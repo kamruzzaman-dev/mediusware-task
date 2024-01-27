@@ -8,7 +8,7 @@ const Problem2 = () => {
   const [getAllContact, setGetAllContact] = useState(false);
   const [getUSContact, setGetUSContact] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -30,7 +30,8 @@ const Problem2 = () => {
 
         const jsonData = await response.json();
         // console.log("Received data:", jsonData);
-        setData(jsonData.results);
+        setData((prevData) => [...prevData, ...jsonData.results]);
+
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
@@ -39,13 +40,14 @@ const Problem2 = () => {
     };
 
     dataFetching();
-  }, [getAllContact, getUSContact]);
+  }, [getAllContact, getUSContact, page]);
 
   const handleCloseModals = () => {
     setShowModal(false);
     setGetAllContact(false);
     setGetUSContact(false);
     setData([]);
+    setPage(1);
   };
 
   const handleOpenModals = (contactValue) => {
@@ -54,13 +56,17 @@ const Problem2 = () => {
     if (contactValue === "us_contact") {
       setGetUSContact(true);
       setGetAllContact(false);
+      setData([]);
+      setPage(1);
     } else {
       setGetUSContact(false);
       setGetAllContact(true);
+      setData([]);
+      setPage(1);
     }
   };
 
-  //   console.log(getAllContact, getUSContact);
+  console.log(page);
 
   return (
     <div className="container">
