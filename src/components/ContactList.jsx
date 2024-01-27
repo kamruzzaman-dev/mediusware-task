@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Spinner } from "react-bootstrap";
-const ContactList = ({ isLoading, data }) => {
+const ContactList = ({ isLoading, data, setPage }) => {
   const [onlyEvenChecked, setOnlyEvenChecked] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [details, setDetails] = useState(null);

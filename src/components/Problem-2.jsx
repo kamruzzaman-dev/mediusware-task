@@ -9,6 +9,7 @@ const Problem2 = () => {
   const [getUSContact, setGetUSContact] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState();
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     const dataFetching = async () => {
@@ -16,8 +17,8 @@ const Problem2 = () => {
         setIsLoading(true);
         const response = await fetch(
           getAllContact
-            ? "https://contact.mediusware.com/api/contacts/?page=1&page_size=10"
-            : "https://contact.mediusware.com/api/country-contacts/United%20States/?page=1&page_size=10"
+            ? `https://contact.mediusware.com/api/contacts/?page=${page}&page_size=10`
+            : `https://contact.mediusware.com/api/country-contacts/United%20States/?page=${page}&page_size=10`
         );
 
         if (!response.ok) {
@@ -59,7 +60,7 @@ const Problem2 = () => {
     }
   };
 
-  console.log(getAllContact, getUSContact);
+  //   console.log(getAllContact, getUSContact);
 
   return (
     <div className="container">
@@ -172,7 +173,7 @@ const Problem2 = () => {
           </div>
         </Modal.Header>
         <Modal.Body>
-          <ContactList isLoading={isLoading} data={data} />{" "}
+          <ContactList isLoading={isLoading} setPage={setPage} data={data} />{" "}
         </Modal.Body>
       </Modal>
     </div>
