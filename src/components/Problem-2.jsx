@@ -73,9 +73,18 @@ const Problem2 = () => {
               backgroundColor: "#46139f",
               color: "#fff",
               borderColor: "#46139f",
+              transition: "background-color 0.3s ease, color 0.3s ease",
             }}
             type="button"
             onClick={() => handleOpenModals("all_contact")}
+            onMouseOver={(e) => {
+              e.target.style.backgroundColor = "#2a0a78";
+              e.target.style.color = "#fff";
+            }}
+            onMouseOut={(e) => {
+              e.target.style.backgroundColor = "#46139f";
+              e.target.style.color = "#fff";
+            }}
           >
             All Contacts
           </button>
@@ -85,9 +94,18 @@ const Problem2 = () => {
               backgroundColor: "#ff7f50",
               color: "#fff",
               borderColor: "#ff7f50",
+              transition: "background-color 0.3s ease, color 0.3s ease",
             }}
             type="button"
             onClick={() => handleOpenModals("us_contact")}
+            onMouseOver={(e) => {
+              e.target.style.backgroundColor = "#e66438";
+              e.target.style.color = "#fff";
+            }}
+            onMouseOut={(e) => {
+              e.target.style.backgroundColor = "#ff7f50";
+              e.target.style.color = "#fff";
+            }}
           >
             US Contacts
           </button>
@@ -96,17 +114,26 @@ const Problem2 = () => {
 
       {/* Modal */}
       <Modal show={showModal} onHide={handleCloseModals}>
-        <Modal.Header closeButton>
-          <div className="d-flex justify-content-center gap-3">
+        <Modal.Header>
+          <div className="d-flex justify-content-between gap-3">
             <Button
               style={{
                 backgroundColor: "#46139f",
                 color: "#fff",
                 borderColor: "#46139f",
+                transition: "background-color 0.3s ease, color 0.3s ease",
               }}
               className="btn btn-lg btn-outline-primary"
               type="button"
               onClick={() => handleOpenModals("all_contact")}
+              onMouseOver={(e) => {
+                e.target.style.backgroundColor = "#2a0a78";
+                e.target.style.color = "#fff";
+              }}
+              onMouseOut={(e) => {
+                e.target.style.backgroundColor = "#46139f";
+                e.target.style.color = "#fff";
+              }}
             >
               All Contacts
             </Button>
@@ -115,17 +142,26 @@ const Problem2 = () => {
                 backgroundColor: "#ff7f50",
                 color: "#fff",
                 borderColor: "#ff7f50",
+                transition: "background-color 0.3s ease, color 0.3s ease",
               }}
               className="btn btn-md btn-outline-warning"
               type="button"
               onClick={() => handleOpenModals("us_contact")}
+              onMouseOver={(e) => {
+                e.target.style.backgroundColor = "#e66438";
+                e.target.style.color = "#fff";
+              }}
+              onMouseOut={(e) => {
+                e.target.style.backgroundColor = "#ff7f50";
+                e.target.style.color = "#fff";
+              }}
             >
               US Contacts
             </Button>
             <Button
               style={{
-                backgroundColor: "#46139f",
-                color: "#fff",
+                color: "#46139f",
+                backgroundColor: "#fff",
                 borderColor: "#46139f",
               }}
               className="btn btn-md"
