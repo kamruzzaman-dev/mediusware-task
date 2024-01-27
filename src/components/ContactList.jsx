@@ -1,57 +1,5 @@
 import React, { useState } from "react";
-
-const data = [
-  {
-    id: 1,
-    phone: "+1-202-555-0115",
-    country: {
-      id: 2,
-      name: "United States",
-    },
-  },
-  {
-    id: 2,
-    phone: "+1-202-555-0145",
-    country: {
-      id: 2,
-      name: "United States",
-    },
-  },
-  {
-    id: 3,
-    phone: "+1-202-555-0127",
-    country: {
-      id: 2,
-      name: "United States",
-    },
-  },
-  {
-    id: 4,
-    phone: "+1-202-555-0168",
-    country: {
-      id: 2,
-      name: "United States",
-    },
-  },
-  {
-    id: 5,
-    phone: "+880-165-552-5408",
-    country: {
-      id: 1,
-      name: "Bangladesh",
-    },
-  },
-  {
-    id: 6,
-    phone: "+880-115-553-7167",
-    country: {
-      id: 1,
-      name: "Bangladesh",
-    },
-  },
-];
-
-const ContactList = () => {
+const ContactList = ({ data }) => {
   const [onlyEvenChecked, setOnlyEvenChecked] = useState(false);
 
   const handleCheckboxChange = () => {
@@ -66,8 +14,8 @@ const ContactList = () => {
             <tr>
               <th scope="col">ID</th>
               <th scope="col">Status</th>
-              <th scope="col">country ID</th>
-              <th scope="col">country</th>
+              <th scope="col">Country ID</th>
+              <th scope="col">Country</th>
             </tr>
           </thead>
           <tbody>

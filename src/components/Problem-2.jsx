@@ -1,13 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import ContactList from "./ContactList";
+
 const Problem2 = () => {
   const [showModal, setShowModal] = useState(false);
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    const dataFetching = async () => {
+      try {
+        const response = await fetch(
+          "https://contact.mediusware.com/api/contacts/?page=1&page_size=6"
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            `Network response was not ok: ${response.statusText}`
+          );
+        }
+
+        const jsonData = await response.json();
+        console.log("Received data:", jsonData);
+        setData(jsonData.results);
+      } catch (error) {
+        console.error("Error during fetch:", error.message);
+      }
+    };
+
+    dataFetching();
+  }, []);
 
   const handleCloseModals = () => {
     setShowModal(false);
   };
+
+  console.log(data);
 
   return (
     <div className="container">
@@ -84,7 +112,7 @@ const Problem2 = () => {
           </div>
         </Modal.Header>
         <Modal.Body>
-          <ContactList/>
+          <ContactList data={data} />{" "}
         </Modal.Body>
       </Modal>
     </div>
