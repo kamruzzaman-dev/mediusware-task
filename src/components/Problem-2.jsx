@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import ContactList from "./ContactList";
 const Problem2 = () => {
-  const [showModalA, setShowModalA] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleCloseModals = () => {
-    setShowModalA(false);
+    setShowModal(false);
   };
 
   return (
@@ -15,16 +16,26 @@ const Problem2 = () => {
 
         <div className="d-flex justify-content-center gap-3">
           <button
-            className="btn btn-lg  btn-primary btn-outline-primary"
+            className="btn btn-lg"
+            style={{
+              backgroundColor: "#46139f",
+              color: "#fff",
+              borderColor: "#46139f",
+            }}
             type="button"
-            onClick={() => setShowModalA(true)}
+            onClick={() => setShowModal(true)}
           >
             All Contacts
           </button>
           <button
-            className="btn btn-lg btn-warning btn-outline-warning"
+            className="btn btn-lg"
+            style={{
+              backgroundColor: "#ff7f50",
+              color: "#fff",
+              borderColor: "#ff7f50",
+            }}
             type="button"
-            onClick={() => setShowModalA(true)}
+            onClick={() => setShowModal(true)}
           >
             US Contacts
           </button>
@@ -32,27 +43,39 @@ const Problem2 = () => {
       </div>
 
       {/* Modal */}
-      <Modal show={showModalA} onHide={handleCloseModals}>
+      <Modal show={showModal} onHide={handleCloseModals}>
         <Modal.Header closeButton>
           <div className="d-flex justify-content-center gap-3">
             <Button
-              style={{ backgroundColor: "#46139f", color:"#fff", borderColor: "#46139f" }}
+              style={{
+                backgroundColor: "#46139f",
+                color: "#fff",
+                borderColor: "#46139f",
+              }}
               className="btn btn-lg btn-outline-primary"
               type="button"
-              onClick={() => setShowModalA(true)}
+              onClick={() => setShowModal(true)}
             >
               All Contacts
             </Button>
             <Button
-              style={{ backgroundColor: "#ff7f50", color:"#fff", borderColor: "#ff7f50" }}
+              style={{
+                backgroundColor: "#ff7f50",
+                color: "#fff",
+                borderColor: "#ff7f50",
+              }}
               className="btn btn-md btn-outline-warning"
               type="button"
-              onClick={() => setShowModalA(true)}
+              onClick={() => setShowModal(true)}
             >
               US Contacts
             </Button>
             <Button
-              style={{ backgroundColor: "#46139f", color:"#fff", borderColor: "#46139f" }}
+              style={{
+                backgroundColor: "#46139f",
+                color: "#fff",
+                borderColor: "#46139f",
+              }}
               className="btn btn-md"
               onClick={handleCloseModals}
             >
@@ -60,7 +83,9 @@ const Problem2 = () => {
             </Button>
           </div>
         </Modal.Header>
-        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+        <Modal.Body>
+          <ContactList/>
+        </Modal.Body>
       </Modal>
     </div>
   );
