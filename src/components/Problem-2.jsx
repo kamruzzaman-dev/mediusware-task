@@ -5,37 +5,61 @@ import ContactList from "./ContactList";
 
 const Problem2 = () => {
   const [showModal, setShowModal] = useState(false);
+  const [getAllContact, setGetAllContact] = useState(false);
+  const [getUSContact, setGetUSContact] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState();
 
   useEffect(() => {
     const dataFetching = async () => {
       try {
+        setIsLoading(true);
         const response = await fetch(
-          "https://contact.mediusware.com/api/contacts/?page=1&page_size=6"
+          getAllContact
+            ? "https://contact.mediusware.com/api/contacts/?page=1&page_size=1"
+            : "https://contact.mediusware.com/api/country-contacts/United%20States/?page=1&page_size=5"
         );
 
         if (!response.ok) {
+          setIsLoading(false);
           throw new Error(
             `Network response was not ok: ${response.statusText}`
           );
         }
 
         const jsonData = await response.json();
-        console.log("Received data:", jsonData);
+        // console.log("Received data:", jsonData);
         setData(jsonData.results);
+        setIsLoading(false);
       } catch (error) {
+        setIsLoading(false);
         console.error("Error during fetch:", error.message);
       }
     };
 
     dataFetching();
-  }, []);
+  }, [getAllContact, getUSContact]);
 
   const handleCloseModals = () => {
     setShowModal(false);
+    setGetAllContact(false);
+    setGetUSContact(false);
+    setData([]);
   };
 
-  console.log(data);
+  const handleOpenModals = (contactValue) => {
+    console.log(contactValue);
+    setShowModal(true);
+    if (contactValue === "us_contact") {
+      setGetUSContact(true);
+      setGetAllContact(false);
+    } else {
+      setGetUSContact(false);
+      setGetAllContact(true);
+    }
+  };
+
+  console.log(getAllContact, getUSContact);
 
   return (
     <div className="container">
@@ -51,7 +75,7 @@ const Problem2 = () => {
               borderColor: "#46139f",
             }}
             type="button"
-            onClick={() => setShowModal(true)}
+            onClick={() => handleOpenModals("all_contact")}
           >
             All Contacts
           </button>
@@ -63,7 +87,7 @@ const Problem2 = () => {
               borderColor: "#ff7f50",
             }}
             type="button"
-            onClick={() => setShowModal(true)}
+            onClick={() => handleOpenModals("us_contact")}
           >
             US Contacts
           </button>
@@ -82,7 +106,7 @@ const Problem2 = () => {
               }}
               className="btn btn-lg btn-outline-primary"
               type="button"
-              onClick={() => setShowModal(true)}
+              onClick={() => handleOpenModals("all_contact")}
             >
               All Contacts
             </Button>
@@ -94,7 +118,7 @@ const Problem2 = () => {
               }}
               className="btn btn-md btn-outline-warning"
               type="button"
-              onClick={() => setShowModal(true)}
+              onClick={() => handleOpenModals("us_contact")}
             >
               US Contacts
             </Button>
@@ -112,7 +136,7 @@ const Problem2 = () => {
           </div>
         </Modal.Header>
         <Modal.Body>
-          <ContactList data={data} />{" "}
+          <ContactList isLoading={isLoading} data={data} />{" "}
         </Modal.Body>
       </Modal>
     </div>
